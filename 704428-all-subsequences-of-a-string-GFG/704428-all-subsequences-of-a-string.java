@@ -1,18 +1,21 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 class Solution {
     public List<String> powerSet(String s) {
-        // Code here
-        List<String> l=new ArrayList<>();
-        x(l,s,0,"");
-        Collections.sort(l);
-        return l;
+        List<String> result = new ArrayList<>();
+        generateSubsequences(s, 0, "", result);
+        Collections.sort(result);
+        return result;
     }
-    void x(List<String> l,String s,int i,String c){
-        if(i==s.length()){
-            l.add(c);
+    void generateSubsequences(String s, int index, String current, List<String> result) {
+        if (index == s.length()) {
+            result.add(current);
             return;
         }
-        x(l,s,i+1,c+s.charAt(i));
-        x(l,s,i+1,c);
+        generateSubsequences(s, index + 1, current, result);
+        generateSubsequences(s, index + 1, current + s.charAt(index), result);
     }
 }
 
