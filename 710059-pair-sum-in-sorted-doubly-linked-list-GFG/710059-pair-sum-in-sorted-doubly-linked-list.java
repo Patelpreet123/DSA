@@ -20,7 +20,7 @@ class Solution {
         while(e.next!=null){
             e=e.next;
         }
-        while(s!=null&&e!=null&&s!=e&&s.prev!=e){
+        while(s.data<e.data){
             int sum=s.data+e.data;
             if(sum==target){
                 ArrayList<Integer> l1=new ArrayList<>();
