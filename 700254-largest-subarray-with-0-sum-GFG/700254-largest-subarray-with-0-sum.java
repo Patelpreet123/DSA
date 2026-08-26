@@ -2,24 +2,22 @@ class Solution {
     int maxLength(int arr[]) {
         // code here
         int n=arr.length;
-        int[] x=new int[n];
-        x[0]=arr[0];
+        int[] a=new int[n];
+        a[0]=arr[0];
         for(int i=1;i<n;i++){
-            x[i]=x[i-1]+arr[i];
+            a[i]=a[i-1]+arr[i];
         }
         HashMap<Integer,Integer> m=new HashMap<>();
         int max=0;
         for(int i=0;i<n;i++){
-            if(x[i]==0){
-                max=Math.max(max,i+1);
+            if(a[i]==0){
+                max=Math.max(max,i+1); 
             }
-            if(m.containsKey(x[i])){
-                max=Math.max(max,i-m.get(x[i]));
-            }
-            if(m.containsKey(x[i])){
+            if(m.containsKey(a[i])){
+                max=Math.max(max,i-m.get(a[i]));
                 continue;
             }
-            m.put(x[i],i);
+            m.put(a[i],i);
         }
         return max;
     }
