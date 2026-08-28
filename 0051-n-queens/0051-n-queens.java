@@ -1,50 +1,55 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> l=new ArrayList<>();
-        x(l,n);
-        return l;
-    }
-    void x(List<List<String>> l,int n){
-        char[][] a=new char[n][n];
+        char[][] x=new char[n][n];
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                a[i][j]='.';
+                x[i][j]='.';
             }
         }
-        solve(a,0,n,l);
+        solve(l,x,0);
+        return l;
     }
-    void solve(char[][] a,int i,int n,List<List<String>> l){
-        if(i==n){
-            List<String> t=new ArrayList<>();
-            for (int x=0;x<n;x++){
-                t.add(new String(a[x]));
+    void solve(List<List<String>> l,char[][] x,int j){
+        if(j==x.length){
+            List<String> l1=new ArrayList<>();
+            for(char[] x1:x){
+                l1.add(new String(x1));
             }
-            l.add(t);
+            l.add(l1);
             return;
         }
-        for(int j=0;j<n;j++){
-            if(isSafe(j,i,a,n)){
-                a[j][i]='Q';
-                solve(a,i+1,n,l);
-                a[j][i]='.';
+        for(int i=0;i<x.length;i++){
+            if(isValid(x,i,j)){
+                x[i][j]='Q';
+                solve(l,x,j+1);
+                x[i][j]='.';
             }
         }
     }
-    boolean isSafe(int r,int c,char[][] a,int n){
-        for(int i=0;i<c;i++){
-            if(a[r][i]=='Q'){
+    boolean isValid(char[][] x,int i,int j){
+        int p=i,q=j;
+        while(p>=0&&q>=0){
+            if(x[p][q]=='Q'){
                 return false;
             }
+            p--;
+            q--;
         }
-        for(int i=r,j=c;j>=0&&i<n;j--,i++){
-            if(a[i][j]=='Q'){
+        p=i;q=j;
+        while(q>=0&&p<x.length){
+            if(x[p][q]=='Q'){
                 return false;
             }
+            p++;
+            q--;
         }
-        for(int i=r,j=c;j>=0&&i>=0;j--,i--){
-            if(a[i][j]=='Q'){
+        q=j;
+        while(q>=0){
+            if(x[i][q]=='Q'){
                 return false;
             }
+            q--;
         }
         return true;
     }
