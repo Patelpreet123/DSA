@@ -1,43 +1,46 @@
 class Solution {
     int c=0;
     public int totalNQueens(int n) {
-        char[][] a=new char[n][n];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                a[i][j]='.';
-            }
-        }
-        solve(a,0,n);
+        char[][] x=new char[n][n];
+        solve(x,0);
         return c;
     }
-    void solve(char[][] a,int i,int n){
-        if(i==n){
+    void solve(char[][] x,int i){
+        if(i==x.length){
             c++;
             return;
         }
-        for(int j=0;j<n;j++){
-            if(isSafe(i,j,a,n)){
-                a[i][j]='Q';
-                solve(a,i+1,n);
-                a[i][j]='.';
+        for(int j=0;j<x.length;j++){
+            if(isValid(x,i,j)){
+                x[i][j]='Q';
+                solve(x,i+1);
+                x[i][j]=' ';
             }
         }
     }
-    boolean isSafe(int r,int c,char[][] a,int n){
-        for(int i=0;i<r;i++){
-            if(a[i][c]=='Q'){
+    boolean isValid(char[][] x,int i,int j){
+        int p=i,q=j;
+        while(p>=0&&q>=0){
+            if(x[p][q]=='Q'){
                 return false;
             }
+            p--;
+            q--;
         }
-        for(int i=r-1,j=c-1;i>=0&&j>=0;i--,j--){
-            if(a[i][j]=='Q'){
+        p=i;q=j;
+        while(p>=0&&q<x.length){
+            if(x[p][q]=='Q'){
                 return false;
             }
+            p--;
+            q++;
         }
-        for(int i=r-1,j=c+1;i>=0&&j<n;i--,j++){
-            if(a[i][j]=='Q'){
+        p=i;
+        while(p>=0){
+            if(x[p][j]=='Q'){
                 return false;
             }
+            p--;
         }
         return true;
     }
