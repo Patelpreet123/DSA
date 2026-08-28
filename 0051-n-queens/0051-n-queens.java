@@ -7,10 +7,13 @@ class Solution {
                 x[i][j]='.';
             }
         }
-        solve(l,x,0);
+        boolean[] c=new boolean[n];
+        boolean[] d1=new boolean[2*n-1];
+        boolean[] d2=new boolean[2*n-1];
+        solve(l,x,0,c,d1,d2);
         return l;
     }
-    void solve(List<List<String>> l,char[][] x,int j){
+    void solve(List<List<String>> l,char[][] x,int j,boolean[] c,boolean[] d1,boolean[] d2){
         if(j==x.length){
             List<String> l1=new ArrayList<>();
             for(char[] x1:x){
@@ -20,38 +23,20 @@ class Solution {
             return;
         }
         for(int i=0;i<x.length;i++){
-            if(isValid(x,i,j)){
+            int x1=i-j+x.length-1;
+            int x2=i+j;
+            if(!c[i]&&!d1[x1]&&!d2[x2]){
                 x[i][j]='Q';
-                solve(l,x,j+1);
+                c[i]=true;
+                d1[x1]=true;
+                d2[x2]=true;
+                solve(l,x,j+1,c,d1,d2);
                 x[i][j]='.';
+                c[i]=false;
+                d1[x1]=false;
+                d2[x2]=false;
             }
         }
-    }
-    boolean isValid(char[][] x,int i,int j){
-        int p=i,q=j;
-        while(p>=0&&q>=0){
-            if(x[p][q]=='Q'){
-                return false;
-            }
-            p--;
-            q--;
-        }
-        p=i;q=j;
-        while(q>=0&&p<x.length){
-            if(x[p][q]=='Q'){
-                return false;
-            }
-            p++;
-            q--;
-        }
-        q=j;
-        while(q>=0){
-            if(x[i][q]=='Q'){
-                return false;
-            }
-            q--;
-        }
-        return true;
     }
 }
 
