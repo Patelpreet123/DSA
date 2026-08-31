@@ -11,10 +11,15 @@ class Solution {
             if(r-l+1-mx>k){
                 x[s.charAt(l)-'A']--;
                 l++;
+                mx=0;
+                for(int i=0;i<26;i++){
+                    mx=Math.max(mx,x[i]);
+                }
             }
             a=Math.max(a,r-l+1);
             r++;
         }
+        // System.out.println(mx);
         return a;
     }
 }
