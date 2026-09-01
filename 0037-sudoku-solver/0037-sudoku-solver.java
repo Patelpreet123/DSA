@@ -1,50 +1,48 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        solve(board);
+        solve(board,0,0);
     }
-    boolean solve(char[][] board){
+    boolean solve(char[][] x,int r,int c){
+        if(r==9&&c==0){
+            return true;
+        }
+        int nr=r;
+        int nc=c+1;
+        if(nc==9){
+            nr=r+1;
+            nc=0;
+        }
+        if(x[r][c]!='.'){
+            return solve(x,nr,nc);
+        }
+        for(int d=1;d<=9;d++){
+            if(isValid(x,r,c,(char)(d+'0'))){
+                x[r][c]=(char)(d+'0');
+                if(solve(x,nr,nc)){
+                    return true;
+                }
+                x[r][c]='.';
+            }
+        }
+        return false;
+    }
+    boolean isValid(char[][] x,int r,int c,char d){
         for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                if(board[i][j]=='.'){
-                    for(char k='1';k<='9';k++){
-                        if(isValid(board,i,j,k)){
-                            board[i][j]=k;
-                            if(solve(board)){
-                                return true;
-                            }
-                            board[i][j]='.';
-                        }
-                    }
-                    return false;
-                }
+            if(x[i][c]==d){
+                return false;
             }
         }
-        return true;
-    }
-    boolean isValid(char[][] board,int i,int j,char k){
-        int[] a=new int[10];
-        int[] b=new int[10];
-        int[] c=new int[10];
-        for(int p=0;p<9;p++){
-            if(board[i][p]!='.'){
-                if(board[i][p]==k){
-                    return false;
-                }
-            }
-            if(board[p][j]!='.'){
-                if(board[p][j]==k){
-                    return false;
-                }
+        for(int i=0;i<9;i++){
+            if(x[r][i]==d){
+                return false;
             }
         }
-        int p=(i/3)*3;
-        int q=(j/3)*3;
-        for(int x=p;x<p+3;x++){
-            for(int y=q;y<q+3;y++){
-                if(board[x][y]!='.'){
-                    if(board[x][y]==k){
-                        return false;
-                    }
+        int sr=(r/3)*3;
+        int sc=(c/3)*3;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(x[sr+i][sc+j]==d){
+                    return false;
                 }
             }
         }
