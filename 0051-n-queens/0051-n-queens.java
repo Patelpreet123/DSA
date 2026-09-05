@@ -1,42 +1,49 @@
 class Solution {
+    List<List<String>> l=new ArrayList<>();
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> l=new ArrayList<>();
-        char[][] x=new char[n][n];
+        char[][] b=new char[n][n];
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                x[i][j]='.';
+                b[i][j]='.';
             }
         }
-        boolean[] c=new boolean[n];
-        boolean[] d1=new boolean[2*n-1];
-        boolean[] d2=new boolean[2*n-1];
-        solve(l,x,0,c,d1,d2);
+        solve(b,0);
         return l;
     }
-    void solve(List<List<String>> l,char[][] x,int j,boolean[] c,boolean[] d1,boolean[] d2){
-        if(j==x.length){
-            List<String> l1=new ArrayList<>();
-            for(char[] x1:x){
-                l1.add(new String(x1));
+    void solve(char[][] b,int r){
+        if(r==b.length){
+            List<String> t=new ArrayList<>();
+            for(char[] x:b){
+                t.add(new String(x));
             }
-            l.add(l1);
+            l.add(t);
             return;
         }
-        for(int i=0;i<x.length;i++){
-            int x1=i-j+x.length-1;
-            int x2=i+j;
-            if(!c[i]&&!d1[x1]&&!d2[x2]){
-                x[i][j]='Q';
-                c[i]=true;
-                d1[x1]=true;
-                d2[x2]=true;
-                solve(l,x,j+1,c,d1,d2);
-                x[i][j]='.';
-                c[i]=false;
-                d1[x1]=false;
-                d2[x2]=false;
+        for(int c=0;c<b.length;c++){
+            if(valid(b,r,c)){
+                b[r][c]='Q';
+                solve(b,r+1);
+                b[r][c]='.';
             }
         }
+    }
+    boolean valid(char[][] b,int r,int c){
+        for(int i=0;i<r;i++){
+            if(b[i][c]=='Q'){
+                return false;
+            }
+        }
+        for(int i=r-1,j=c-1;i>=0&&j>=0;i--,j--){
+            if(b[i][j]=='Q'){
+                return false;
+            }
+        }
+        for(int i=r-1,j=c+1;i>=0&&j<b.length;i--,j++){
+            if(b[i][j]=='Q'){
+                return false;
+            }
+        }
+        return true;
     }
 }
 
