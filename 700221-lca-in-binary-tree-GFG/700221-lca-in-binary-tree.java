@@ -13,32 +13,21 @@ class Node {
 
 class Solution {
     Node lca(Node root, int n1, int n2) {
-        // code here
-        List<Node> p1=new ArrayList<>();
-        path(root,p1,n1);
-        List<Node> p2=new ArrayList<>();
-        path(root,p2,n2);
-        int i=0;
-        for(;i<p1.size()&&i<p2.size();i++){
-            if(p1.get(i)!=p2.get(i)){
-                break;
-            }
+        if(root==null){
+            return null;
         }
-        return p1.get(i-1);
-    }
-    boolean path(Node r,List<Node> l,int t){
+        if(root.data==n1||root.data==n2){
+            return root;
+        }
+        Node l=lca(root.left,n1,n2);
+        Node r=lca(root.right,n1,n2);
+        if(l==null){
+            return r;
+        }
         if(r==null){
-            return false;
+            return l;
         }
-        l.add(r);
-        if(r.data==t){
-            return true;
-        }
-        if(path(r.left,l,t)||path(r.right,l,t)){
-            return true;
-        }
-        l.remove(l.size()-1);
-        return false;
+        return root;
     }
 }
 
