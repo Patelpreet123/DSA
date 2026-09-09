@@ -1,17 +1,11 @@
 class Solution {
     public int climbStairs(int n) {
         int[] a=new int[n+1];
-        Arrays.fill(a,-1);
-        return x(n,a);
-    }
-    int x(int n,int[] a){
-        if(n<=3){
-            return n;
+        a[0]=1;
+        a[1]=1;
+        for(int i=2;i<=n;i++){
+            a[i]=a[i-1]+a[i-2];
         }
-        if(a[n]!=-1){
-            return a[n];
-        }
-        a[n]=x(n-1,a)+x(n-2,a);
         return a[n];
     }
 }
