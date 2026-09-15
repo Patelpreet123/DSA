@@ -13,25 +13,18 @@ class Solution {
     public ArrayList<Integer> leftView(Node root) {
         // code here
         ArrayList<Integer> l=new ArrayList<>();
-        if(root==null){
-            return l;
-        }
-        Queue<Node> q=new LinkedList<>();
-        q.add(root);
-        while(!q.isEmpty()){
-            int n=q.size();
-            l.add(q.peek().data);
-            while(n-->0){
-                Node t=q.remove();
-                if(t.left!=null){
-                    q.add(t.left);
-                }
-                if(t.right!=null){
-                    q.add(t.right);
-                }
-            }
-        }
+        f(root,0,l);
         return l;
+    }
+    void f(Node root,int level,ArrayList<Integer> l){
+        if(root==null){
+            return;
+        }
+        if(level==l.size()){
+            l.add(root.data);
+        }
+        f(root.left,level+1,l);
+        f(root.right,level+1,l);
     }
 }
 
