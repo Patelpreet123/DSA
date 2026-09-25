@@ -14,22 +14,21 @@
  * }
  */
 class Solution {
+    int s=0;
     public int sumNumbers(TreeNode root) {
-        int[] a={0};
-        fun(root,0,a);
-        return a[0];
+        f(root,0);
+        return s;
     }
-    void fun(TreeNode root,int curr,int[] a){
+    void f(TreeNode root,int t){
         if(root==null){
             return;
         }
         if(root.left==null&&root.right==null){
-            a[0]+=(curr*10+root.val);
+            s+=(t*10+root.val);
             return;
         }
-        curr=curr*10+root.val;
-        fun(root.left,curr,a);
-        fun(root.right,curr,a);
+        f(root.left,t*10+root.val);
+        f(root.right,t*10+root.val);
     }
 }
 
