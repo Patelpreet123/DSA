@@ -12,24 +12,26 @@ class Node {
 */
 
 class Solution {
-    int x=Integer.MIN_VALUE;
     public int findMaxFork(Node root, int k) {
         // code here.
-        f(root,k);
+        int x=Integer.MIN_VALUE;
+        Node t=root;
+        while(t!=null){
+            if(k==t.data){
+                return t.data;
+            }
+            if(k>t.data){
+                x=Math.max(x,t.data);
+                t=t.right;
+            }
+            else{
+                t=t.left;
+            }
+        }
         if(x==Integer.MIN_VALUE){
             return -1;
         }
         return x;
-    }
-    void f(Node root,int k){
-        if(root==null){
-            return;
-        }
-        if(root.data<=k){
-            x=Math.max(root.data,x);
-        }
-        f(root.left,k);
-        f(root.right,k);
     }
 }
 
