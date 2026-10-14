@@ -14,30 +14,21 @@ class Solution {
         boolean[] vis=new boolean[V];
         for(int i=0;i<V;i++){
             if(!vis[i]){
-                if(bfs(l,vis,i)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    boolean bfs(List<List<Integer>> l,boolean[] vis,int node){
-        Queue<int[]> q=new LinkedList<>();
-        q.add(new int[]{node,-1});
-        vis[node]=true;
-        while(!q.isEmpty()){
-            int[] x=q.remove();
-            int x1=x[0];
-            int par=x[1];
-            for(int i=0;i<l.get(x1).size();i++){
-                int neigh=l.get(x1).get(i);
-                if(!vis[neigh]){
-                    vis[neigh]=true;
-                    q.add(new int[]{neigh,x1});
-                }
-                else{
-                    if(neigh!=par){
-                        return true;
+                Queue<int[]> q=new LinkedList<>();
+                q.add(new int[]{i,-1});
+                vis[i]=true;
+                while(!q.isEmpty()){
+                    int[] t=q.remove();
+                    int node=t[0];
+                    int parent=t[1];
+                    for(int neigh:l.get(node)){
+                        if(!vis[neigh]){
+                            vis[neigh]=true;
+                            q.add(new int[]{neigh,node});
+                        }
+                        else if(neigh!=parent){
+                            return true;
+                        }
                     }
                 }
             }
