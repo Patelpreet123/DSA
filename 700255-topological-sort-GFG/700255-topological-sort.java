@@ -5,32 +5,30 @@ class Solution {
         for(int i=0;i<V;i++){
             e.add(new ArrayList<>());
         }
-        int[] indegree=new int[V];
         for(int[] x:edges){
             int u=x[0];
             int v=x[1];
             e.get(u).add(v);
-            indegree[v]++;
         }
-        Queue<Integer> q=new LinkedList<>();
-        for(int i=0;i<V;i++){
-            if(indegree[i]==0){
-                q.add(i);
-            }
-        }
+        boolean[] vis=new boolean[V];
         ArrayList<Integer> ans=new ArrayList<>();
-        while(!q.isEmpty()){
-            int t=q.remove();
-            ans.add(t);
-            for(int i=0;i<e.get(t).size();i++){
-                int neigh=e.get(t).get(i);
-                indegree[neigh]--;
-                if(indegree[neigh]==0){
-                    q.add(neigh);
-                }
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                dfs(e,vis,ans,i);
             }
         }
+        Collections.reverse(ans);
         return ans;
+    }
+    void dfs(List<List<Integer>> e,boolean[] vis,ArrayList<Integer> ans,int node){
+        vis[node]=true;
+        for(int i=0;i<e.get(node).size();i++){
+            int neigh=e.get(node).get(i);
+            if(!vis[neigh]){
+                dfs(e,vis,ans,neigh);
+            }
+        }
+        ans.add(node);
     }
 }
 
