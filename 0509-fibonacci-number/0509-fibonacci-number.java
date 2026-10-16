@@ -1,18 +1,9 @@
 class Solution {
     public int fib(int n) {
-        int[] x=new int[n+1];
-        Arrays.fill(x,-1);
-        return f(n,x);
-    }
-    int f(int n,int[] x){
-        if(n==0||n==1){
+        if(n<=1){
             return n;
         }
-        if(x[n]!=-1){
-            return x[n];
-        }
-        x[n]=f(n-1,x)+f(n-2,x);
-        return x[n];
+        return fib(n-1)+fib(n-2);
     }
 }
 
