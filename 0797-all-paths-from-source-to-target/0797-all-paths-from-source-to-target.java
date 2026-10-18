@@ -9,8 +9,10 @@ class Solution {
         if(src==dest){
             ans.add(new ArrayList<>(l));
         }
-        for(int neigh:graph[src]){
-            f(graph,neigh,dest,l,ans);
+        else{
+            for(int neigh:graph[src]){
+                f(graph,neigh,dest,l,ans);
+            }
         }
         l.remove(l.size()-1);
     }
