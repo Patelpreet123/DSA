@@ -2,30 +2,29 @@ class Solution {
     public int numIslands(char[][] grid) {
         int n=grid.length;
         int m=grid[0].length;
-        boolean[][] vis=new boolean[n][m];
         int ans=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]=='1'&&!vis[i][j]){
+                if(grid[i][j]=='1'){
                     ans++;
-                    dfs(grid,vis,i,j,n,m);
+                    dfs(grid,i,j);
                 }
             }
         }
         return ans;
     }
-    void dfs(char[][] grid,boolean[][] vis,int i,int j,int n,int m){
-        if(i<0||j<0||i>=n||j>=m){
+    void dfs(char[][] grid,int r,int c){
+        if(r<0||r>=grid.length||c<0||c>=grid[0].length||grid[r][c]=='*'){
             return;
         }
-        if(grid[i][j]=='0'||vis[i][j]){
+        if(grid[r][c]=='0'){
             return;
         }
-        vis[i][j]=true;
-        dfs(grid,vis,i+1,j,n,m);
-        dfs(grid,vis,i-1,j,n,m);
-        dfs(grid,vis,i,j+1,n,m);
-        dfs(grid,vis,i,j-1,n,m);
+        grid[r][c]='*';
+        dfs(grid,r+1,c);
+        dfs(grid,r,c+1);
+        dfs(grid,r-1,c);
+        dfs(grid,r,c-1);
     }
 }
 
