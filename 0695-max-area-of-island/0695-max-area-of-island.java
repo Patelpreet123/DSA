@@ -1,27 +1,24 @@
 class Solution {
     public int maxAreaOfIsland(int[][] grid) {
-        int n=grid.length;
-        int m=grid[0].length;
-        boolean[][] vis=new boolean[n][m];
-        int mx=0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]==1&&!vis[i][j]){
-                    mx=Math.max(mx,dfs(grid,vis,i,j,n,m));
+        int ans=0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    ans=Math.max(ans,dfs(grid,i,j));
                 }
             }
         }
-        return mx;
+        return ans;
     }
-    int dfs(int[][] grid,boolean[][] vis,int i,int j,int n,int m){
-        if(i<0||j<0||i>=n||j>=m){
+    int dfs(int[][] grid,int r,int c){
+        if(r<0||c<0||r>=grid.length||c>=grid[0].length||grid[r][c]==-1){
             return 0;
         }
-        if(grid[i][j]==0||vis[i][j]){
+        if(grid[r][c]==0){
             return 0;
         }
-        vis[i][j]=true;
-        return 1+dfs(grid,vis,i+1,j,n,m)+dfs(grid,vis,i-1,j,n,m)+dfs(grid,vis,i,j+1,n,m)+dfs(grid,vis,i,j-1,n,m);
+        grid[r][c]=-1;
+        return 1+dfs(grid,r+1,c)+dfs(grid,r,c+1)+dfs(grid,r-1,c)+dfs(grid,r,c-1);
     }
 }
 
