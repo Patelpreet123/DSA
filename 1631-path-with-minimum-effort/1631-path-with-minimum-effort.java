@@ -35,17 +35,18 @@ class Solution {
             int[] t=pq.remove();
             int d=t[0];
             int u=t[1];
+            if(d>sd[u]){
+                continue;
+            }
             for(int[] neigh:e.get(u)){
                 int v=neigh[0];
                 int wt=neigh[1];
-                if(sd[v]>Math.max(d,wt)){
-                    sd[v]=Math.max(d,wt);
-                    pq.add(new int[]{Math.max(d,wt),v});
+                int x=Math.max(d,wt);
+                if(sd[v]>x){
+                    sd[v]=x;
+                    pq.add(new int[]{x,v});
                 }
             }
-        }
-        for(int i=0;i<n*m;i++){
-            System.out.println(sd[i]);
         }
         return sd[n*m-1];
     }
