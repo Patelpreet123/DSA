@@ -1,6 +1,6 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<Integer> l=new ArrayList<>();
+        int c=0;
         List<List<Integer>> e=new ArrayList<>();
         for(int i=0;i<numCourses;i++){
             e.add(new ArrayList<>());
@@ -20,7 +20,7 @@ class Solution {
         }
         while(!q.isEmpty()){
             int t=q.remove();
-            l.add(t);
+            c++;
             for(int neigh:e.get(t)){
                 indeg[neigh]--;
                 if(indeg[neigh]==0){
@@ -28,7 +28,7 @@ class Solution {
                 }
             }
         }
-        if(l.size()==numCourses) return true;
+        if(c==numCourses) return true;
         return false;
     }
 }
