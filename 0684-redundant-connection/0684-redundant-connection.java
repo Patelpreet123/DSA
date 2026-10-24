@@ -1,28 +1,36 @@
 class Solution {
-    int[] par;
     public int[] findRedundantConnection(int[][] edges) {
-        par=new int[edges.length+1];
         int[] ans=new int[2];
-        for(int i=0;i<=edges.length;i++){
-            par[i]=i;
+        int n=edges.length;
+        List<List<Integer>> e=new ArrayList<>();
+        for(int i=0;i<=n;i++){
+            e.add(new ArrayList<>());
         }
         for(int[] x:edges){
-            int u=find(x[0]);
-            int v=find(x[1]);
-            if(u==v){
-                ans[0]=x[0];
-                ans[1]=x[1];
-                return ans;
+            int u=x[0];
+            int v=x[1];
+            boolean[] vis=new boolean[n+1];
+            if(dfs(u,v,e,vis)){
+                return x;
             }
-            par[u]=v;
+            e.get(u).add(v);
+            e.get(v).add(u);
         }
-        return null;
+        return new int[]{};
     }
-    int find(int i){
-        if(par[i]==i){
-            return i;
+    boolean dfs(int curr,int t,List<List<Integer>> e,boolean[] vis){
+        if(curr==t){
+            return true;
         }
-        return par[i]=find(par[i]);
+        vis[curr]=true;
+        for(int neigh:e.get(curr)){
+            if(!vis[neigh]){
+                if(dfs(neigh,t,e,vis)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
