@@ -15,16 +15,18 @@
  */
 class Solution {
     public TreeNode bstToGst(TreeNode root) {
-        f(root,0);
+        int[] s={0};
+        f(root,s);
         return root;
     }
-    int f(TreeNode root,int s){
+    void f(TreeNode root,int[] s){
         if(root==null){
-            return s;
+            return;
         }
-        s=f(root.right,s);
-        root.val+=s;
-        return f(root.left,root.val);
+        f(root.right,s);
+        s[0]+=root.val;
+        root.val=s[0];
+        f(root.left,s);
     }
 }
 
