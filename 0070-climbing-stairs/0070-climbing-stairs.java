@@ -1,13 +1,18 @@
 class Solution {
-    int[] x=new int[46];
+    int[] x;
     public int climbStairs(int n) {
+        x=new int[n+1];
+        Arrays.fill(x,-1);
+        return f(n);
+    }
+    int f(int n){
         if(n<=3){
             return n;
         }
-        if(x[n]!=0){
+        if(x[n]!=-1){
             return x[n];
         }
-        return x[n]=climbStairs(n-1)+climbStairs(n-2);
+        return x[n]=f(n-1)+f(n-2);
     }
 }
 
