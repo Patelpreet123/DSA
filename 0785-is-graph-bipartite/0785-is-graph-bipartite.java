@@ -3,33 +3,29 @@ class Solution {
         int[] x=new int[graph.length];
         for(int i=0;i<graph.length;i++){
             if(x[i]==0){
-                if(bfs(i,graph,x)){
+                if(dfs(i,-1,graph,x)){
                     return false;
                 }
             }
         }
         return true;
     }
-    boolean bfs(int i,int[][] graph,int[] x){
-        x[i]=1;
-        Queue<int[]> q=new LinkedList<>();
-        q.add(new int[]{i,-1});
-        while(!q.isEmpty()){
-            int[] t=q.remove();
-            int node=t[0];
-            for(int neigh:graph[node]){
-                if(x[neigh]==0){
-                    q.add(new int[]{neigh,node});
-                    if(x[node]==1){
-                        x[neigh]=2;
-                    }
-                    else{
-                        x[neigh]=1;
-                    }
-                }
-                else if(x[neigh]==x[node]){
-                    return true;
-                }
+    boolean dfs(int node,int par,int[][] graph,int[] x){
+        if(x[node]!=0){
+            if(par!=-1&&x[par]==x[node]){
+                return true;
+            }
+            return false;
+        }
+        if(par==-1||x[par]==2){
+            x[node]=1;
+        }
+        else{
+            x[node]=2;
+        }
+        for(int neigh:graph[node]){
+            if(dfs(neigh,node,graph,x)){
+                return true;
             }
         }
         return false;
