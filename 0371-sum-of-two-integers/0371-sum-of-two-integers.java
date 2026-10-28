@@ -4,7 +4,7 @@ class Solution {
             a=-a;
             while(a!=0){
                 b=~(-b);
-                a=~(-a);
+                a=~-a;
             }
             return b;
         }
