@@ -1,10 +1,9 @@
 class Solution {
     public int getSum(int a, int b) {
         if(a<0){
-            a=-a;
             while(a!=0){
                 b=~(-b);
-                a=~-a;
+                a=-(~a);
             }
             return b;
         }
