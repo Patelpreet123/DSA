@@ -8,10 +8,9 @@ class Solution {
         for(int i=0;i<graph.length;i++){
             for(int j=0;j<graph[i].length;j++){
                 e.get(graph[i][j]).add(i);
-                indeg[i]++;
             }
+            indeg[i]=graph[i].length;
         }
-        List<Integer> ans=new ArrayList<>();
         Queue<Integer> q=new LinkedList<>();
         for(int i=0;i<graph.length;i++){
             if(indeg[i]==0){
@@ -20,7 +19,6 @@ class Solution {
         }
         while(!q.isEmpty()){
             int t=q.remove();
-            ans.add(t);
             for(int neigh:e.get(t)){
                 indeg[neigh]--;
                 if(indeg[neigh]==0){
@@ -28,7 +26,10 @@ class Solution {
                 }
             }
         }
-        Collections.sort(ans);
+        List<Integer> ans=new ArrayList<>();
+        for(int i=0;i<indeg.length;i++){
+            if(indeg[i]==0) ans.add(i);
+        }
         return ans;
     }
 }
