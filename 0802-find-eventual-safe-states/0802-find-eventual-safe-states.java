@@ -11,7 +11,7 @@ class Solution {
             }
             indeg[i]=graph[i].length;
         }
-        Queue<Integer> q=new LinkedList<>();
+        Queue<Integer> q=new ArrayDeque<>();
         for(int i=0;i<graph.length;i++){
             if(indeg[i]==0){
                 q.add(i);
