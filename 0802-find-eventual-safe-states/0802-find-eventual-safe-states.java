@@ -1,28 +1,33 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n=graph.length;
         List<List<Integer>> e=new ArrayList<>();
-        for(int i=0;i<graph.length;i++){
+        for(int i=0;i<n;i++){
             e.add(new ArrayList<>());
         }
-        int[] indeg=new int[graph.length];
-        for(int i=0;i<graph.length;i++){
+        int[] indeg=new int[n];
+        for(int i=0;i<n;i++){
             for(int j=0;j<graph[i].length;j++){
                 e.get(graph[i][j]).add(i);
             }
             indeg[i]=graph[i].length;
         }
-        Queue<Integer> q=new ArrayDeque<>();
-        for(int i=0;i<graph.length;i++){
+        int[] q=new int[n];
+        int f=0,r=0;
+        for(int i=0;i<n;i++){
             if(indeg[i]==0){
-                q.add(i);
+                q[r]=i;
+                r++;
             }
         }
-        while(!q.isEmpty()){
-            int t=q.remove();
+        while(f<r){
+            int t=q[f];
+            f++;
             for(int neigh:e.get(t)){
                 indeg[neigh]--;
                 if(indeg[neigh]==0){
-                    q.add(neigh);
+                    q[r]=neigh;
+                    r++;
                 }
             }
         }
