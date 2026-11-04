@@ -1,41 +1,27 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        int n=graph.length;
-        List<List<Integer>> e=new ArrayList<>();
-        for(int i=0;i<n;i++){
-            e.add(new ArrayList<>());
-        }
-        int[] indeg=new int[n];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<graph[i].length;j++){
-                e.get(graph[i][j]).add(i);
-            }
-            indeg[i]=graph[i].length;
-        }
-        int[] q=new int[n];
-        int f=0,r=0;
-        for(int i=0;i<n;i++){
-            if(indeg[i]==0){
-                q[r]=i;
-                r++;
-            }
-        }
-        while(f<r){
-            int t=q[f];
-            f++;
-            for(int neigh:e.get(t)){
-                indeg[neigh]--;
-                if(indeg[neigh]==0){
-                    q[r]=neigh;
-                    r++;
-                }
-            }
-        }
         List<Integer> ans=new ArrayList<>();
-        for(int i=0;i<indeg.length;i++){
-            if(indeg[i]==0) ans.add(i);
+        int[] state=new int[graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(dfs(i,graph,state)){
+                ans.add(i);
+            }
         }
         return ans;
+    }
+    boolean dfs(int node,int[][] graph,int[] state){
+        if(state[node]==2) return true;
+        if(state[node]==3) return false;
+        if(state[node]==1) return false;
+        state[node]=1;
+        for(int neigh:graph[node]){
+            if(!dfs(neigh,graph,state)){
+                state[neigh]=3;
+                return false;
+            }
+        }
+        state[node]=2;
+        return true;
     }
 }
 
