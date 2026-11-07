@@ -14,24 +14,30 @@
  * }
  */
 class Solution {
+    int ans=0;
     public int pathSum(TreeNode root, int targetSum) {
-        if(root==null){
-            return 0;
-        }
-        return f(root,targetSum)+pathSum(root.left,targetSum)+pathSum(root.right,targetSum);
+        HashMap<Long,Integer> mp=new HashMap<>();
+        mp.put(0l,1);
+        f(root,targetSum,mp,0);
+        return ans;
     }
-    int f(TreeNode root,long t){
+    void f(TreeNode root,int t,HashMap<Long,Integer> mp,long s){
         if(root==null){
-            return 0;
+            return;
         }
-        t-=root.val;
-        int cnt=0;
-        if(t==0){
-            cnt=1;
+        s+=root.val;
+        if(mp.containsKey(s-t)){
+            ans+=mp.get(s-t);
         }
-        cnt+=f(root.left,t);
-        cnt+=f(root.right,t);
-        return cnt;
+        if(mp.containsKey(s)){
+            mp.put(s,mp.get(s)+1);
+        }
+        else{
+            mp.put(s,1);
+        }
+        f(root.left,t,mp,s);
+        f(root.right,t,mp,s);
+        mp.put(s,mp.get(s)-1);
     }
 }
 
